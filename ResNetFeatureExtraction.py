@@ -14,12 +14,16 @@ model.summary()
 
 base_path = sys.argv[1]
 print(base_path)
-# base_path = '/home/aman/Desktop/Mini-Project/KeyFrames'
+# base_path = '/home/aman/Desktop/Mini-Project/data/test/NonAccident'
 
 
 def get_features(img_path):
+    # load image setting the image size to 224 x 224
     img = image.load_img(img_path, target_size=(224, 224))
+    # convert image to numpy array
     img_data = image.img_to_array(img)
+    # the image is now in an array of shape (3, 224, 224)
+    # need to expand it to (1, 3, 224, 224) as it's expecting a list
     img_data = np.expand_dims(img_data, axis=0)
     img_data = preprocess_input(img_data)
 
@@ -40,7 +44,7 @@ if __name__ == '__main__':
     allKeyFramesFeat = []
 
     counter = 0
-    dir_path = base_path + '/*.jpg'
+    dir_path = base_path + '/*.jpeg'
     for img_path in glob.iglob(dir_path):
 
         print(img_path)
@@ -50,7 +54,7 @@ if __name__ == '__main__':
 
     print(counter)
     print(len(allKeyFramesFeat))
-    # shutil.rmtree("KeyFrames")
+    shutil.rmtree("KeyFrames")
 
     # Clustering
     kmeans = KMeans(n_clusters=5, random_state=0).fit(allKeyFramesFeat)
