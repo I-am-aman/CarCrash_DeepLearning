@@ -17,7 +17,7 @@ X = [list(map(float, lst)) for lst in feature_vector]
 
 # Reading label_vector.csv
 with open("label_vector.csv", 'r') as my_file:
-    reader = csv.reader(my_file, delimiter=' ')
+    reader = csv.reader(my_file, delimiter='\n')
     label_vector = list(reader)
 
 y_temp_list = [list(map(int, lst)) for lst in label_vector]

@@ -20,7 +20,7 @@ if __name__ == '__main__':
         pass
 
     # Running algorithm for Accident Videos
-    for video_path in glob("/home/aman/Desktop/Mini-Project/MiniAccidents/RoadAccident*.mp4"):
+    for video_path in glob("/home/aman/Desktop/Mini-Project/Accidents/RoadAccident*.mp4"):
 
         print(video_path)
         make_shots(video_path)
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         os.system("python ResNetFeatureExtraction.py Accident")
 
     # Running algorithm for Non-Accident Videos
-    for video_path in glob("/home/aman/Desktop/Mini-Project/MiniNonAccidents/videoplayback*.mp4"):
+    for video_path in glob("/home/aman/Desktop/Mini-Project/NonAccidents/videoplayback*.mp4"):
 
         print(video_path)
         make_shots(video_path)

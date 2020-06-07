@@ -47,18 +47,25 @@ if __name__ == '__main__':
 
     counter = 0
     dir_path = base_path + '/*.jpg'
+
+    for img_path in glob.iglob(dir_path):
+        counter += 1
+
+    print(counter)
+    if counter <= 5:
+        shutil.rmtree("RefinedKeyFrames")
+        sys.exit(0)
+
     for img_path in glob.iglob(dir_path):
 
         print(img_path)
         feat = get_features(img_path)
         allKeyFramesFeat.append(feat)
 
-        if video_type == 'Accident':
-            video_label.append(1)
-        else:
-            video_label.append(0)
-
-        counter += 1
+    if video_type == 'Accident':
+        video_label.append(1)
+    else:
+        video_label.append(0)
 
     print(counter)
     print(len(allKeyFramesFeat))
