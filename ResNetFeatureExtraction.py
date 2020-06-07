@@ -12,7 +12,8 @@ import sys
 model = ResNet50(weights='imagenet', include_top=False, pooling='avg')
 model.summary()
 
-base_path = sys.argv[1]
+video_type = sys.argv[1]
+base_path = "/home/aman/Desktop/Mini-Project/RefinedKeyFrames/" + video_type
 print(base_path)
 # base_path = '/home/aman/Desktop/Mini-Project/data/test/NonAccident'
 
@@ -42,19 +43,26 @@ def get_features(img_path):
 if __name__ == '__main__':
 
     allKeyFramesFeat = []
+    video_label = []
 
     counter = 0
-    dir_path = base_path + '/*.jpeg'
+    dir_path = base_path + '/*.jpg'
     for img_path in glob.iglob(dir_path):
 
         print(img_path)
         feat = get_features(img_path)
         allKeyFramesFeat.append(feat)
+
+        if video_type == 'Accident':
+            video_label.append(1)
+        else:
+            video_label.append(0)
+
         counter += 1
 
     print(counter)
     print(len(allKeyFramesFeat))
-    shutil.rmtree("KeyFrames")
+    shutil.rmtree("RefinedKeyFrames")
 
     # Clustering
     kmeans = KMeans(n_clusters=5, random_state=0).fit(allKeyFramesFeat)
@@ -71,3 +79,8 @@ if __name__ == '__main__':
     with open("feature_vector.csv", 'a') as outfile:
         writer = csv.writer(outfile, delimiter=' ')
         writer.writerow(vectorForVideo)
+
+    # Making label_vector.csv
+    with open("label_vector.csv", 'a') as outfile:
+        writer = csv.writer(outfile, delimiter=' ')
+        writer.writerow(video_label)

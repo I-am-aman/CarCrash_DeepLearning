@@ -3,19 +3,12 @@ import numpy as np
 import os
 import glob
 import shutil
-import sys
 import datetime
 
 if not os.path.exists('KeyFrames'):
     os.makedirs('KeyFrames')
-if not os.path.exists('KeyFrames/Accident'):
-    os.makedirs('KeyFrames/Accident')
-if not os.path.exists('KeyFrames/NonAccident'):
-    os.makedirs('KeyFrames/NonAccident')
 
 localCounter = 0
-flag = sys.argv[1]
-print(flag)
 
 for name in glob.glob("/home/aman/Desktop/Mini-Project/FrameFolder*"):
     print(name)
@@ -54,18 +47,9 @@ for name in glob.glob("/home/aman/Desktop/Mini-Project/FrameFolder*"):
     while i < numOfFrames-1:
         l = int(sumOfDiffArray[i])
         if float(l) > th:
-            path = name+"/frame"+str(i+1)+'.jpg'
+            path = name + "/frame" + str(i + 1) + '.jpg'
             img = cv2.imread(path, cv2.IMREAD_COLOR)
-            if(flag == "Accident"):
-                basename = "/home/aman/Desktop/Mini-Project/KeyFrames/Accident/frame"
-                suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-                filename = "_".join([basename, suffix, str(localCounter), ".jpg"])
-                cv2.imwrite(filename, img)
-            else:
-                basename = "/home/aman/Desktop/Mini-Project/KeyFrames/NonAccident/frame"
-                suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-                filename = "_".join([basename, suffix, str(localCounter), ".jpg"])
-                cv2.imwrite(filename, img)
+            cv2.imwrite("/home/aman/Desktop/Mini-Project/KeyFrames/frame{0}.jpg".format(localCounter), img)
             localCounter += 1
         i = i + 1
 
