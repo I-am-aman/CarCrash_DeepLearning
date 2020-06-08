@@ -4,7 +4,6 @@ from keras.applications.vgg16 import preprocess_input
 import numpy as np
 import shutil
 from sklearn.cluster import KMeans
-from collections import Counter
 import csv
 import glob
 import sys
@@ -14,8 +13,8 @@ model.summary()
 
 video_type = sys.argv[1]
 base_path = "/home/aman/Desktop/Mini-Project/RefinedKeyFrames/" + video_type
-print(base_path)
-# base_path = '/home/aman/Desktop/Mini-Project/data/test/NonAccident'
+print("Processing in ResNetFeatureExtraction.py- Processing for Folder: ", base_path)
+# base_path = '/home/aman/Desktop/Mini-Project/data/test/Accident'
 
 
 def get_features(img_path):
@@ -46,19 +45,20 @@ if __name__ == '__main__':
     video_label = []
 
     counter = 0
-    dir_path = base_path + '/*.jpg'
+    dir_path = base_path + '/*.jpeg'
 
     for img_path in glob.iglob(dir_path):
         counter += 1
 
-    print(counter)
+    print("Processing in ResNetFeatureExtraction.py- Total Refined KeyFrames in this Folder is: ", counter)
     if counter <= 5:
+        print("This must be greater than 5; So exiting!")
         shutil.rmtree("RefinedKeyFrames")
         sys.exit(0)
 
     for img_path in glob.iglob(dir_path):
 
-        print(img_path)
+        print("Processing in ResNetFeatureExtraction.py- Processing for RefinedKeyFrame: ", img_path)
         feat = get_features(img_path)
         allKeyFramesFeat.append(feat)
 
@@ -67,20 +67,18 @@ if __name__ == '__main__':
     else:
         video_label.append(0)
 
-    print(counter)
-    print(len(allKeyFramesFeat))
+    print("Processing in ResNetFeatureExtraction.py- Size of allKeyFramesFeat vector: ", len(allKeyFramesFeat))
     shutil.rmtree("RefinedKeyFrames")
 
     # Clustering
     kmeans = KMeans(n_clusters=5, random_state=0).fit(allKeyFramesFeat)
-    print(kmeans.labels_)
+    print("Processing in ResNetFeatureExtraction.py- Cluster labels: ", kmeans.labels_)
 
     vectorForVideo = []
     for eachCentroid in kmeans.cluster_centers_:
         vectorForVideo.extend(eachCentroid)
 
-    print(vectorForVideo)
-    print(len(vectorForVideo))
+    print("Processing in ResNetFeatureExtraction.py- BOVW size: ", len(vectorForVideo))
 
     # Making feature_vector.csv
     with open("feature_vector.csv", 'a') as outfile:

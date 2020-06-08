@@ -5,7 +5,6 @@ import tensorflow as tf
 import glob
 import datetime
 import cv2
-import shutil
 import sys
 import os
 
@@ -25,7 +24,7 @@ from object_detection.utils import visualization_utils as vis_util
 localCounter = 0
 
 video_type = sys.argv[1]
-print(video_type)
+print("Processing in VehicleDistanceDetection.py- Processing for Video type: ", video_type)
 # video_type = 'Accident'
 
 # # Model preparation
@@ -84,7 +83,7 @@ IMAGE_SIZE = (12, 8)
 def get_keyframe(img_path):
     with detection_graph.as_default():
         with tf.Session(graph=detection_graph) as sess:
-
+          # while True:
             screen = cv2.imread(img_path, 1)
             screen = cv2.resize(screen, (800,450))
             image_np = cv2.cvtColor(screen, cv2.COLOR_BGR2RGB)
@@ -107,7 +106,7 @@ def get_keyframe(img_path):
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
 
-            # Visualization of the results of a detection.
+            #Visualization of the results of a detection.
             # vis_util.visualize_boxes_and_labels_on_image_array(
             #     image_np,
             #     np.squeeze(boxes),
@@ -150,8 +149,10 @@ def get_keyframe(img_path):
 if __name__ == '__main__':
 
     dir_path = "/home/aman/Desktop/Mini-Project/KeyFrames/*.jpg"
-    # dir_path = "/home/aman/Desktop/Mini-Project/accident1.jpg"
     for img_path in glob.iglob(dir_path):
-        print(img_path)
+        print("Processing in VehicleDistanceDetection.py- Processing for KeyFrame: ", img_path)
         get_keyframe(img_path)
         localCounter += 1
+
+    # img_path = "/home/aman/Desktop/Mini-Project/non-accident1.jpeg"
+    # get_keyframe(img_path)

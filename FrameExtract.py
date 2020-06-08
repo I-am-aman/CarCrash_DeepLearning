@@ -31,8 +31,8 @@ def FrameCapture(path):
 
 if __name__ == '__main__':
     for var in glob("/home/aman/Desktop/Mini-Project/VideoClips/*.mp4"):
-        print(var)
+        print("Processing in FrameExtract.py- Processing for Video shot: ", var)
         FrameCapture(var)
     # FrameCapture("/home/aman/Desktop/Mini-Project/RoadAccident1.mp4")
-    print(num)
+    print("Processing in FrameExtract.py- Total Number of frames obtained: ", num)
     shutil.rmtree("VideoClips")

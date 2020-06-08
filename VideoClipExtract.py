@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # Running algorithm for Accident Videos
     for video_path in glob("/home/aman/Desktop/Mini-Project/Accidents/RoadAccident*.mp4"):
 
-        print(video_path)
+        print("Processing in VideoClipExtract.py- Processing video: ", video_path)
         make_shots(video_path)
         os.system("python FrameExtract.py")
         os.system("python KeyFrameExtract.py")
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # Running algorithm for Non-Accident Videos
     for video_path in glob("/home/aman/Desktop/Mini-Project/NonAccidents/videoplayback*.mp4"):
 
-        print(video_path)
+        print("Processing in VideoClipExtract.py- Processing video: ", video_path)
         make_shots(video_path)
         os.system("python FrameExtract.py")
         os.system("python KeyFrameExtract.py")

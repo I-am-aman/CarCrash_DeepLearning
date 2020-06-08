@@ -3,7 +3,6 @@ import numpy as np
 import os
 import glob
 import shutil
-import datetime
 
 if not os.path.exists('KeyFrames'):
     os.makedirs('KeyFrames')
@@ -11,15 +10,15 @@ if not os.path.exists('KeyFrames'):
 localCounter = 0
 
 for name in glob.glob("/home/aman/Desktop/Mini-Project/FrameFolder*"):
-    print(name)
+    print("Processing in KeyFrameExtract.py- Processing for FrameFolder: ", name)
     numOfFrames = len([f for f in os.listdir(name)])
     sumOfDiffArray = [0]*numOfFrames
     count = 0
     mean = 0
     deviation = 0
     i = 0;
-    while i<numOfFrames-2:
-        FirstImage=name+"/frame"+str(i)+'.jpg'
+    while i < numOfFrames-2:
+        FirstImage = name+"/frame"+str(i)+'.jpg'
         im1 = cv2.imread(FirstImage, cv2.IMREAD_COLOR)
         im1 = cv2.cvtColor(im1, cv2.COLOR_RGB2GRAY)
 
@@ -55,4 +54,4 @@ for name in glob.glob("/home/aman/Desktop/Mini-Project/FrameFolder*"):
 
     shutil.rmtree(name)
 
-print(localCounter)
+print("Processing in FrameExtract.py- Total Number of KeyFrames obtained: ", localCounter)
